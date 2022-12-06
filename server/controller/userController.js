@@ -4,10 +4,10 @@ const userModel = require("../model/userModel")
 module.exports.registerUser = async (req, res) => {
     const { email, password, relation, regno } = req.body;
     const data = await userModel.find({ email })
-    console.log(data)
+    const hashedPassword=await bcrypt.hash(password,10)
     const user = {
         email: email,
-        password: password,
+        password: hashedPassword,
         relation: relation,
         regno: regno
     }
@@ -33,7 +33,8 @@ module.exports.registerUser = async (req, res) => {
 }
 module.exports.loginUser = async (req, res) => {
     const { email, password, relation} = req.body;
-    const data = await userModel.findOne({ email,password,relation})
+    const hashedPassword=await bcrypt.hash(password,10)
+    const data = await userModel.findOne({ email,hashedPassword,relation})
     if (data) {
         res.json({
             success: true,
