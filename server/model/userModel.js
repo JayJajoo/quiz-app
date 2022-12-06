@@ -1,0 +1,35 @@
+const mongoose=require("mongoose")
+const userSchema=new mongoose.Schema({
+    regno:{
+        type:String,
+        require:true,
+        min:3,
+        max:20,
+        unique:true,
+    },
+    email:{
+        type:String,
+        require:true,
+        max:60,
+        unique:true,
+    },
+    password:{
+        type:String,
+        require:true,
+        max:20,
+        unique:false,
+    },
+    relation:{
+        type:String,
+        require:true,
+        max:10,
+        unique:false,
+    },
+    totalTestGiven:{
+        type:Number,
+    },
+    testDetails:{
+        type:mongoose.SchemaTypes.Array,
+    }
+})
+module.exports=mongoose.model("Users",userSchema)
